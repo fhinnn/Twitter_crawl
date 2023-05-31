@@ -18,25 +18,27 @@ def crawl_twitter_hashtag(hashtags, num_tweets, start_date, end_date, output_fil
         for tweet in tweets:
             writer.writerow([tweet])
 
-hashtags = ["#Pemilu",
-"#Pemilu2024",
-"#PemiluLegislatif",
-"#PemiluPresiden",
-"#Demokrasi",
-"#Politik",
-"#PartaiPolitik",
-"#SuaraRakyat",
-"#PerubahanPolitik",
-"#CalonLegislatif",
-"#CalonPresiden",
-"#Kampanye",
-"#DebatPublik",
-"#DebatPilpres",
-"#PemilihCerdas",
-"#HakPilih",
-"#DemokrasiIndonesia",
-"#PemiluSehat",
-"#PemiluDamai",
-"#TerkiniPemilu"]
+hashtags = [
+"Pemilu2024",
+# "#PemiluLegislatif",
+# "PemiluPresiden",
+# "#Demokrasi",
+# "#Politik",
+# "PartaiPolitik",
+# "#SuaraRakyat",
+# "#PerubahanPolitik",
+# "#CalonLegislatif",
+# "CalonPresiden",
+# "#Kampanye",
+# "#DebatPublik",
+# "#DebatPilpres",
+# "#PemilihCerdas",
+# "#HakPilih",
+# "#DemokrasiIndonesia",
+# "#PemiluSehat",
+# "#PemiluDamai",
+# "#TerkiniPemilu"
+]
 
-crawl_twitter_hashtag(hashtags, 100, '2021-01-01', '2023-12-31', 'hasil/tweets.csv')
+
+crawl_twitter_hashtag(hashtags, 100, '2021-01-01', '2023-12-31', 'output/pemilu2.csv')
