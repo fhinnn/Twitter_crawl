@@ -1,49 +1,33 @@
 import snscrape.modules.twitter as sntwitter
 import pandas as pd
 
-def crawl_twitter_hashtag(hashtags, num_tweets, start_date, end_date, output_file):
-    tweets = []
-    tweet_id = 1  # Inisialisasi ID tweet
+def crawl_twitter_hashtag(num_tweets, start_date, end_date):
+    hashtags = input("Masukkan hashtag yang akan dicari (pisahkan dengan koma jika lebih dari satu): ")
+    hashtags = [tag.strip() for tag in hashtags.split(",")]
 
     for hashtag in hashtags:
+        tweets = []
+
         query = f'{hashtag} since:{start_date} until:{end_date}'
-        for tweet in sntwitter.TwitterSearchScraper(query).get_items():
+        for tweet in sntwitter.TwitterHashtagScraper(query).get_items():
             if any(tag.lower() in tweet.rawContent.lower() for tag in hashtags):
                 tweet_data = {
-                    'ID': tweet_id,
+                    'ID': tweet.id,
                     'Tweet': tweet.rawContent,
                     'Tanggal': tweet.date.strftime('%Y-%m-%d %H:%M:%S'),
                     'Lokasi': tweet.place
                 }
                 tweets.append(tweet_data)
-                tweet_id += 1
                 if len(tweets) >= num_tweets:
                     break
 
-    df = pd.DataFrame(tweets)
-    df = df[['ID', 'Tweet', 'Tanggal', 'Lokasi']]  # Menentukan urutan kolom
-    df.to_csv(output_file, index=False)
+        if tweets:
+            df = pd.DataFrame(tweets)
+            output_file = f'hasil/pemilu/{hashtag}.csv'
+            df.to_csv(output_file, index=False)
 
-hashtags = [
-    "Pemilu2024",
-    "#PemiluLegislatif",
-    "PemiluPresiden",
-    "#Demokrasi",
-    "#Politik",
-    "PartaiPolitik",
-    "#SuaraRakyat",
-    "#PerubahanPolitik",
-    "#CalonLegislatif",
-    "CalonPresiden",
-    "#Kampanye",
-    "#DebatPublik",
-    "#DebatPilpres",
-    "#PemilihCerdas",
-    "#HakPilih",
-    "#DemokrasiIndonesia",
-    "#PemiluSehat",
-    "#PemiluDamai",
-    "#TerkiniPemilu"
-]
+num_tweets = 100
+start_date = '2021-01-01'
+end_date = '2023-12-31'
 
-crawl_twitter_hashtag(hashtags, 200, '2021-01-01', '2023-12-31', 'hasil/pemilu/1.csv')
+crawl_twitter_hashtag(num_tweets, start_date, end_date)
