@@ -1,5 +1,5 @@
 import snscrape.modules.twitter as sntwitter
-import csv
+import pandas as pd
 
 def crawl_twitter_hashtag(hashtags, num_tweets, start_date, end_date, output_file):
     tweets = []
@@ -7,16 +7,18 @@ def crawl_twitter_hashtag(hashtags, num_tweets, start_date, end_date, output_fil
     for hashtag in hashtags:
         query = f'{hashtag} since:{start_date} until:{end_date}'
         for tweet in sntwitter.TwitterSearchScraper(query).get_items():
-            if any(tag.lower() in tweet.content.lower() for tag in hashtags):
-                tweets.append(tweet.content)
+            if any(tag.lower() in tweet.rawContent.lower() for tag in hashtags):
+                tweet_data = {
+                    'Tweet': tweet.rawContent,
+                    'Tanggal': tweet.date.strftime('%Y-%m-%d %H:%M:%S'),
+                    'Lokasi': tweet.place
+                }
+                tweets.append(tweet_data)
                 if len(tweets) >= num_tweets:
                     break
 
-    with open(output_file, 'w', newline='', encoding='utf-8') as csv_file:
-        writer = csv.writer(csv_file)
-        writer.writerow(['Tweet'])
-        for tweet in tweets:
-            writer.writerow([tweet])
+    df = pd.DataFrame(tweets)
+    df.to_csv(output_file, index=False)
 
 hashtags = [
 "Pemilu2024",
@@ -39,4 +41,5 @@ hashtags = [
 # "#PemiluDamai",
 # "#TerkiniPemilu"
 ]
-crawl_twitter_hashtag(hashtags, 100, '2021-01-01', '2023-12-31', 'output/pemilu2.csv')
+
+crawl_twitter_hashtag(hashtags, 200, '2021-01-01', '2023-12-31', 'hasil/pemilu/1.csv')
