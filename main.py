@@ -39,6 +39,4 @@ hashtags = [
 # "#PemiluDamai",
 # "#TerkiniPemilu"
 ]
-
-
 crawl_twitter_hashtag(hashtags, 100, '2021-01-01', '2023-12-31', 'output/pemilu2.csv')
