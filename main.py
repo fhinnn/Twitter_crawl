@@ -9,8 +9,8 @@ def crawl_twitter_hashtag(num_tweets, start_date, end_date):
         tweets = []
 
         query = f'{hashtag} since:{start_date} until:{end_date}'
-        for tweet in sntwitter.TwitterHashtagScraper(query).get_items():
-            if any(tag.lower() in tweet.rawContent.lower() for tag in hashtags):
+        for tweet in sntwitter.TwitterSearchScraper(query).get_items():
+            if any(tag.lower() in tweet.rawContent for tag in hashtags):
                 tweet_data = {
                     'ID': tweet.id,
                     'Tweet': tweet.rawContent,
@@ -26,8 +26,8 @@ def crawl_twitter_hashtag(num_tweets, start_date, end_date):
             output_file = f'hasil/pemilu/{hashtag}.csv'
             df.to_csv(output_file, index=False)
 
-num_tweets = 100
-start_date = '2021-01-01'
-end_date = '2023-12-31'
+num_tweets = 1000
+start_date = '2022-01-01'
+end_date = '2023-05-31'
 
 crawl_twitter_hashtag(num_tweets, start_date, end_date)
