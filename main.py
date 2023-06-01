@@ -15,7 +15,7 @@ def crawl_twitter_hashtag(num_tweets, start_date, end_date):
                     'ID': tweet.id,
                     'Tweet': tweet.rawContent,
                     'Tanggal': tweet.date.strftime('%Y-%m-%d %H:%M:%S'),
-                    'Lokasi': tweet.place
+                    'Lokasi': tweet.place.fullName if tweet.place is not None else None
                 }
                 tweets.append(tweet_data)
                 if len(tweets) >= num_tweets:
@@ -26,7 +26,7 @@ def crawl_twitter_hashtag(num_tweets, start_date, end_date):
             output_file = f'hasil/pemilu/{hashtag}.csv'
             df.to_csv(output_file, index=False)
 
-num_tweets = 1000
+num_tweets = 10000
 start_date = '2022-01-01'
 end_date = '2023-05-31'
 
