@@ -23,11 +23,11 @@ def crawl_twitter_hashtag(num_tweets, start_date, end_date):
 
         if tweets:
             df = pd.DataFrame(tweets)
-            output_file = f'hasil/pemilu/{hashtag}.csv'
-            df.to_csv(output_file, index=False)
+            output_file = f'hasil/pemilu.csv'
+            df.to_csv(output_file, index=False, sep=';', encoding='utf-8-sig')
 
-num_tweets = 10000
+num_tweets = 100000
 start_date = '2022-01-01'
-end_date = '2023-05-31'
+end_date = '2023-05-28'
 
 crawl_twitter_hashtag(num_tweets, start_date, end_date)
