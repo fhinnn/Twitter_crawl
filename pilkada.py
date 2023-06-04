@@ -25,7 +25,7 @@ def crawl_twitter_hashtag(num_tweets, start_date, end_date):
 
     if tweets:
         df = pd.DataFrame(tweets)
-        output_file = f'hasil/pemilu.csv'
+        output_file = f'hasil/pilkada.csv'
         if os.path.isfile(output_file):
             df.to_csv(output_file, mode='a', header=False, index=False, sep=';', encoding='utf-8-sig')
         else:
