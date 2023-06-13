@@ -9,8 +9,8 @@ def remove_duplicate_entries(input_file, output_file):
     # Menyimpan dataframe ke file CSV baru
     df.to_csv(output_file, index=False, sep=';', encoding='utf-8-sig')
 
-input_file = 'hasil/pilkada.csv'
-output_file = 'hasil/pilkada_rev.csv'
+input_file = 'hasil/penyakit_rev.csv'
+output_file = 'fix/penyakit.csv'
 
 remove_duplicate_entries(input_file, output_file)
 
