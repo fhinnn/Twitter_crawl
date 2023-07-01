@@ -4,3 +4,6 @@ tenv/
 env/
 .env/
 venv/
+
+# Notebook
+.idea/
